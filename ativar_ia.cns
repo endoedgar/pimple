@@ -1,0 +1,57 @@
+;---------------------------------------------------------------------------
+; CNS
+; A.I. Ativação via Helper - Detect Helper
+; Aqui a coisa engrena...
+;
+[Statedef 9999]
+anim = 9999
+ctrl = 0
+
+; Vamos deixar o helper invisível
+
+[State 9999]
+type = AssertSpecial
+trigger1 = 1
+flag = invisible
+
+[State 9999]
+type = DisplayToClipboard
+trigger1 = 1
+text = "Helper responsavel pela Inteligencia Artificial"
+
+; Vamos colocá-lo "em oposição" ao seu char
+; Isso significa que o Helper vai ficar de FRENTE (ou "em oposição") ao seu lutador
+
+[State 9999]
+type = Turn
+trigger1 = Facing != Parent, Facing
+
+; Vamos setar a variável da IA de novo
+; Se os comandos "x", "y", "z", "a", "b", "c",
+; "start", "holdfwd", "holdback", "holdup", "holddown" forem executados, a var(59) vale zero
+; Perceba que a ativação só ocorre durante a luta (RoundState = 2)
+
+[State 9999, IA Helper]
+type = ParentVarSet
+triggerall = RoundState = 2
+triggerall = Time > 0 && Parent, MoveType = I
+triggerall = !var(59)
+trigger1 = Parent, Command = "x"
+trigger2 = Parent, Command = "y"
+trigger3 = Parent, Command = "z"
+trigger4 = Parent, Command = "a"
+trigger5 = Parent, Command = "b"
+trigger6 = Parent, Command = "c"
+trigger7 = Parent, Command = "start"
+trigger8 = Parent, Command = "holdfwd"
+trigger9 = Parent, Command = "holdback"
+trigger10 = Parent, Command = "holdup"
+trigger11 = Parent, Command = "holddown"
+var(59) = ifelse (Command = "x" || Command = "y" || Command = "z" || Command = "a" || Command = "b" || Command = "c" || Command = "start" || Command = "holdfwd" || Command = "holdback" || Command = "holdup" || Command = "holddown",0,1)
+;
+; Após a luta, o helper é destruído
+
+[State 9999]
+type = DestroySelf
+trigger1 = RoundState != 2
+trigger2 = var(59)

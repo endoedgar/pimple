@@ -1,0 +1,69 @@
+; Super KO
+[Statedef 7000]
+velset = 0,0
+anim = 9999
+ctrl = 0
+
+[State 7000, Info]
+type = DisplayToClipboard
+trigger1 = 1
+text = "Helper responsavel pelo Super KO"
+
+[State 7000, NotHitBy]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+time = 1
+
+[State 7000, Explod]
+type = Explod
+trigger1 = 1
+pausemovetime = -1
+supermovetime = -1
+sprpriority = -10
+removetime = 40
+postype = left
+scale = .85, 1.10
+anim = 7100
+pos = 0, 0
+id = 7100
+persistent = 0
+
+[State 7000, Pause]
+type = Pause
+trigger1 = 1
+movetime = 40
+time = 40
+persistent = 0
+
+[State 7000, PlaySnd]
+type = PlaySnd
+trigger1 = 1
+value = 6, 0
+persistent = 0
+
+[State 7000, PlaySnd]
+type = PlaySnd
+trigger1 = 1
+value = 6, 1
+persistent = 0
+
+[State 7000, AssertSpecial]
+type = AssertSpecial
+trigger1 = 1
+ignorehitpause = 1
+flag = NoBarDisplay
+flag2 = NoMusic
+
+[State 7000, AssertSpecial]
+type = AssertSpecial
+trigger1 = 1
+ignorehitpause = 1
+flag = NoFG
+flag2 = Invisible
+
+[State 7000, AssertSpecial]
+type = AssertSpecial
+trigger1 = 1
+ignorehitpause = 1
+flag = NoBG

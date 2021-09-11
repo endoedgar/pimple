@@ -1,0 +1,44 @@
+;You downloaded this file from http://endoedgar.netne.net
+
+[Info]
+name="Pimple by Júpiter"
+displayname="Pimple"
+versiondate=27/10/2006
+mugenversion=29,11,2000
+author="endoedgarjunior"
+pal.defaults=1,2,3,4,5,6
+[Files]
+sprite=pimple.sff
+sound=pimple.snd
+anim=pimple.air
+cmd=pimple.cmd
+cns=constants.cns
+st=ataques.cns
+stcommon=estados_comuns.cns
+pal1=pimple.act
+pal2=verde.act
+pal3=azul.act
+pal4=vermelho.act
+pal5=amarelo.act
+pal6=light.act
+st1=estados_menos_tres.cns
+st2=mic.cns
+st3=ativar_ia.cns
+st4=bg_super_ko.cns
+[Arcade]
+intro.storyboard=
+ending.storyboard=
+[Extra Info]
+Manufactory=Rare
+Game=BattleToads
+Style=Boxing
+AI=
+Race=Animal
+Size=Pocket
+Strenght=
+Buttons=2
+Combos=6
+Boss=0
+SuperJump=0
+Levitate=0
+Secret=0

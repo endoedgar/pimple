@@ -1,0 +1,93 @@
+;---------------------------------------------------------------------------
+; Override common states (use same number to override) :
+;---------------------------------------------------------------------------
+
+;---------------------------------------------------------------------------
+; States that are always executed (use statedef -2)
+;---------------------------------------------------------------------------
+
+;---------------------------------------------------------------------------
+; States that are executed when in self's state file (use statedef -3)
+;---------------------------------------------------------------------------
+
+[Statedef -3]
+
+;[State -3]
+;type = DisplayToClipboard
+;trigger1 = NumHelper(9999) <= 0 && roundstate = 2
+;text = "Inteligencia Artificial = %d (OK) %d %d"
+;params = var(59), IsAI, lifemax
+
+;[State -3]
+;type = DisplayToClipboard
+;trigger1 = NumHelper(9999) > 0 && roundstate = 2
+;text = "Inteligencia Artificial = %d (Confusa) %d %d"
+;params = var(59), IsAI, lifemax
+;==================================================================================
+;======| RELACIONADO À AI - AI RELATED |===========================================
+;==================================================================================
+
+; Kamek and Luchini appear to have been the first ones to use the IsHomeTeam AI activation concept.
+; Feel free to move this controller to your character's intro state for slightly better efficiency.
+[State -3, Home Team AI Method]
+type = VarSet
+triggerall = !RoundState
+triggerall = IsHomeTeam
+trigger1 = (TeamSide = 2)
+trigger2 = (MatchNo > 1)
+var(59) = 1
+
+[State -3, AttackMulSet]
+type = AttackMulSet
+trigger1 = var(59)
+trigger1 = roundno != 1
+value = ifelse(roundno = 2,1.2,ifelse(roundno = 3,1.4,1))
+
+[State -3, DefenceMulSet]
+type = DefenceMulSet
+trigger1 = var(59)
+trigger1 = roundno != 1
+value = ifelse(roundno = 2,0.8,ifelse(roundno = 3,0.6,1))
+
+[State -3, Helper] ;Ativação da inteligencia artificial via Helper
+type = Helper
+trigger1 = NumHelper(9999) <= 0
+trigger1 = RoundState = 2
+trigger1 = !var(59)
+name = "AI"
+id = 9999
+pos = 2000,2000
+stateno = 9999
+keyctrl = 1
+
+;*** Super KO ***
+[State -3, Cool Win]
+type = Helper
+pos = 9999, 9999
+stateno = 7000
+name = "Super KO"
+triggerall = WinKO
+triggerall = !NumHelper(7000)
+trigger1 = hitdefattr = SCA, SA, HA, HT, HP
+trigger1 = movecontact
+ignorehitpause = 1
+helpertype = normal
+persistent = 0
+keyctrl = 0
+id = 7000
+
+
+;This controller plays a sound everytime the player lands from a jump, or
+;from a back-dash.
+[State -3, Landing Sound]
+type = PlaySnd
+triggerall = Time = 1
+trigger1 = stateno = 52 ;Jump land
+trigger2 = stateno = 106 ;Run-back land
+value = 40, 0
+
+[State 705, 1]
+type = StopSnd
+trigger1 = stateno != 704 && stateno != 705
+channel = 4
+value = 5,3
